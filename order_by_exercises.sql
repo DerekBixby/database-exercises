@@ -152,8 +152,12 @@ ORDER BY hire_date DESC;
 SELECT last_name, first_name, hire_date, birth_date
 FROM employees
 WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31'
-AND birth_date LIKE '%-12-31'
+AND birth_date LIKE '%-12-25'
 ORDER BY birth_date ASC, hire_date DESC;
+
+-- Corrective note1: can use LIKE '199%' instead of BETWEEN function for simplicity
+
+-- corrective note 2: used 12-31 instead of 12-25 Douadi Pettis, 
 
 -- 358 returns, oldest and hired last: Yannik Chiodo, youngest and hired first: Przemyslawa Heydon
 
