@@ -18,18 +18,20 @@ LIMIT 10;
 SELECT last_name, first_name, hire_date, birth_date
 FROM employees
 WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31'
-AND birth_date LIKE '%-12-31'
+AND birth_date LIKE '%-12-25'
 ORDER BY hire_date ASC
 LIMIT 5;
 
 -- Magdalena Guting, Chaosheng Plavsic, Sachin Brodie, Douadi Streit, Ymte Schlegelmilch
+
+-- corrective note used 12-31 instead of 12-25 for Christmas
 
 -- 4. 
 
 SELECT last_name, first_name, hire_date, birth_date
 FROM employees
 WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31'
-AND birth_date LIKE '%-12-31'
+AND birth_date LIKE '%-12-25'
 ORDER BY hire_date ASC
 LIMIT 5 OFFSET 46;
 
