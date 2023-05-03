@@ -190,12 +190,18 @@ FROM employees
 WHERE hire_date LIKE '199%'
 AND birth_date LIKE '%-12-25';
 
+-- suggestive note: use AS to make results more clear, add ID columns
+
 -- 6. 
 
 SELECT CONCAT(MIN(salary), SPACE(1), MAX(salary))
 FROM salaries;
 
+-- note, can just add ' ' instead of SPACE()
+
 -- min: 38623, Max: 158220
+
+-- 7.
 
 SELECT LOWER(CONCAT(
 SUBSTR(first_name, 1, 1),SUBSTR(last_name, 1, 4),'_',SUBSTR(birth_date, 6, 2),SUBSTR(birth_date, 3, 2))) 
