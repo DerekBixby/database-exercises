@@ -5,7 +5,7 @@ USE employees;
 
 Describe employees;
 
-SELECT DISTINCT(title)
+SELECT count(DISTINCT title)
 FROM titles;
 
 -- 7 unique titles
@@ -51,6 +51,9 @@ FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
 GROUP BY gender;
 
+-- Misunderstood question, was asking for count of each name, thought question was asking for count in each gender for all included names
+
+
 -- result: 441, 268
 
 -- 8. 
@@ -76,5 +79,30 @@ FROM employees
 GROUP BY username
 HAVING count > 5;
 
--- there are duplicates. the max number of duplicates is 6
+-- there are duplicates. the max number of duplicates is 6. Thoguht question was asking for maximum number of duplicates of a single username
+
+-- Bonus questions
+
+-- 1. 
+
+describe salaries;
+
+SELECT emp_no, AVG(salary)
+FROM salaries
+GROUP BY emp_no;
+
+-- 2. 
+
+describe dept_emp;
+
+SELECT
+COUNT (emp_no, dept_no) employees
+FROM dept_emp
+GROUP BY dept_no;
+
+
+
+
+
+
 
