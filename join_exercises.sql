@@ -61,7 +61,8 @@ JOIN departments
 ON dept_manager.dept_no = departments.dept_no
 JOIN employees
 ON dept_manager.emp_no = employees.emp_no
-WHERE dept_manager.to_date = '9999-01-01';
+WHERE dept_manager.to_date = '9999-01-01'
+ORDER BY dept_name;
 
 -- 3. 
 
@@ -107,44 +108,53 @@ FROM departments
 JOIN dept_emp
 ON departments.dept_no = dept_emp.dept_no
 WHERE dept_emp.to_date = '9999-01-01'
-GROUP BY dept_no;
+GROUP BY dept_no
+ORDER BY dept_no;
 
--- 7. error for network
+-- 7. 
 
 SELECT dept_name, AVG(salary)
-FROM dept_emp
-JOIN departments
+FROM departments
+JOIN dept_emp
 ON departments.dept_no = dept_emp.dept_no 
+JOIN employees
+ON employees.emp_no = dept_emp.emp_no
 JOIN salaries 
 ON salaries.emp_no = dept_emp.emp_no
-WHERE salary IN(SELECT max(salary) FROM employees
-GROUP BY dept_name;
+WHERE salaries.to_date = '9999-01-01' 
+GROUP BY dept_name 
+ORDER BY AVG(salary) DESC
+LIMIT 1;
 
--- 8. error for network
+-- 8. error for code
 
 -- Marketing = d001
 
-SELECT CONCAT (employees.first_name, ' ', employees.last_name)
-FROM employees
-JOIN salaries
-ON salaries.emp_no = employees.emp_no
-JOIN dept_emp
-ON dept_emp.emp_no = employees.emp_no
-WHERE dept_no = 'd001' 
-AND salary IN (SELECT max(salary) FROM employees);
+SELECT first_name, last_name
+FROM salaries
+JOIN employees ON salaries.emp_no = employees.emp_no
+JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE dept_name LIKE 'Marketing'
+ORDER BY salary DESC
+LIMIT 1;
 
--- 9. error from network
+-- 9. error in code, selects too many options
 
 SELECT first_name, last_name, salary, dept_name
-FROM dept_manager
-JOIN departments
-ON dept_manager.dept_no = departments.dept_no
-JOIN employees
-ON dept_manager.emp_no = employees.emp_no
-JOIN salaries
-ON salaries.emp_no = dept_manager.emp_no
-WHERE dept_manager.to_date = '9999-01-01'
-AND salary IN (SELECT max(salary) FROM employees);
+FROM salaries
+JOIN employees ON salaries.emp_no = employees.emp_no
+JOIN dept_manager ON employees.emp_no = dept_manager.emp_no
+JOIN departments ON dept_manager.dept_no = departments.dept_no
+WHERE dept_manager.to_date > NOW() AND salaries.to_date > NOW()
+ORDER BY salary DESC
+LIMIT 1;
 
 -- 10. 
 
+SELECT d.dept_name, ROUND(AVG(s.salary),0) AS avg_dept_salary
+FROM departments d
+    JOIN dept_emp de USING (dept_no)
+    JOIN salaries s USING (emp_no)
+GROUP BY d.dept_name
+ORDER BY avg_dept_salary DESC;
